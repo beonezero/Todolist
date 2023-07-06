@@ -1,3 +1,4 @@
+import React from "react"
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
@@ -7,7 +8,8 @@ export type AddItemFormPropsType = {
     addItem: (title: string) => void
 }
 
-export function AddItemForm(props: AddItemFormPropsType) {
+export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+    console.log("AddItemForm")
     const [newTaskTitle, setNewTaskTitle] = useState("")
     const [error, setError] = useState<string | null>(null)
     const onNewTitleChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +24,9 @@ export function AddItemForm(props: AddItemFormPropsType) {
         }
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+        if (error !== null) {
+            setError(null)
+        }
         if (e.ctrlKey && e.key === "Enter") {
             addTask()
         }
@@ -36,7 +40,8 @@ export function AddItemForm(props: AddItemFormPropsType) {
     }
     return (
         <div>
-            <TextField helperText={error} id="standard-basic" label={"Type value"} error={!!error} variant="standard" value={newTaskTitle}
+            <TextField helperText={error} id="standard-basic" label={"Type value"} error={!!error} variant="standard"
+                       value={newTaskTitle}
                        onChange={onNewTitleChangeHandler}
                        onKeyDown={onKeyDownHandler}/>
             <Fab onClick={addTask} size="small" color="secondary" aria-label="add">
@@ -44,4 +49,4 @@ export function AddItemForm(props: AddItemFormPropsType) {
             </Fab>
         </div>
     )
-}
+})

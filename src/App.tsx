@@ -24,7 +24,6 @@ export type TasksStateType = {
 }
 
 export function App() {
-
     function removeTask(mapTid: string, todolistId: string) {
         debugger
         let tasks = tasksObj[todolistId]
